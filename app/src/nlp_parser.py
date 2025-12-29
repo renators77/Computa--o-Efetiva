@@ -6,68 +6,31 @@ from dataclasses import dataclass
 from typing import List
 
 TOKEN_RE = re.compile(r"[\wáéíóúàâêôãõçñ']+", re.IGNORECASE)
+
+# ATUALIZADO: Lista completa de negações para PT e EN
 NEGATIONS = {
-    "não",
-    "nao",
-    "nunca",
-    "jamais",
-    "sem",
-    "not",
-    "never",
-    "no",
-}
-QUESTION_TERMS = {
-    "quem",
-    "onde",
-    "quando",
-    "como",
-    "porquê",
-    "porque",
-    "qual",
-    "quanto",
-    "why",
-    "who",
-    "where",
-    "when",
-    "how",
-    "what",
-}
-FIRST_PERSON = {
-    "eu",
-    "meu",
-    "minha",
-    "acho",
-    "penso",
-    "sinto",
-    "estou",
-    "i",
-    "me",
-    "my",
-    "mine",
-    "feel",
-    "think",
-}
-OPINION_MARKERS = {
-    "acho",
-    "penso",
-    "sinto",
-    "feel",
-    "believe",
-    "seems",
-    "parece",
-}
-FACTUAL_MARKERS = {
-    "dados",
-    "pesquisa",
-    "segundo",
-    "relatório",
-    "report",
-    "diz",
-    "informou",
-    "mediu",
-    "percent",
+    # PT
+    "não", "nao", "nunca", "jamais", "sem", "nem", "nada", "tampouco",
+    # EN
+    "not", "never", "no", "neither", "nor", "nothing", "without", "don't", "cant", "can't", "wont", "won't"
 }
 
+QUESTION_TERMS = {
+    "quem", "onde", "quando", "como", "porquê", "porque", "qual", "quanto",
+    "why", "who", "where", "when", "how", "what", "which"
+}
+FIRST_PERSON = {
+    "eu", "meu", "minha", "acho", "penso", "sinto", "estou", "nós", "nosso",
+    "i", "me", "my", "mine", "feel", "think", "we", "our", "us"
+}
+OPINION_MARKERS = {
+    "acho", "penso", "sinto", "considero", "creio",
+    "feel", "believe", "seems", "think", "opinion"
+}
+FACTUAL_MARKERS = {
+    "dados", "pesquisa", "segundo", "relatório", "estudo", "fato",
+    "report", "diz", "informou", "mediu", "percent", "data", "study", "fact"
+}
 
 @dataclass
 class ParsedSentence:
@@ -92,11 +55,13 @@ class SimpleNLPParser:
         question_terms = [t for t in tokens if t in QUESTION_TERMS]
         opinion_terms = [t for t in tokens if t in OPINION_MARKERS]
         factual_terms = [t for t in tokens if t in FACTUAL_MARKERS]
+        
         has_negation = bool(negation_terms)
         is_question = text.strip().endswith("?") or bool(question_terms)
         is_exclamation = text.strip().endswith("!")
         first_person = any(t in FIRST_PERSON for t in tokens)
-        lemmas = tokens  # placeholder without heavy dep
+        lemmas = tokens
+        
         return ParsedSentence(
             tokens=tokens,
             lemmas=lemmas,
@@ -110,5 +75,4 @@ class SimpleNLPParser:
             question_terms=question_terms,
         )
 
-
-__all__ = ["SimpleNLPParser", "ParsedSentence"]
+__all__ = ["SimpleNLPParser", "ParsedSentence", "NEGATIONS"]
