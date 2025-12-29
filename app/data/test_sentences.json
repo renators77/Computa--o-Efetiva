@@ -1,0 +1,20 @@
+[
+  {
+    "text": "A Nicole anda de bicicleta durante a tarde",
+    "tipo": "afirmação",
+    "natureza": "factual",
+    "emocao": "neutro"
+  },
+  {
+    "text": "Não sei quando vou viajar infelizmente",
+    "tipo": "negação",
+    "natureza": "pessoal",
+    "emocao": "tristeza"
+  },
+  {
+    "text": "Felizmente não chumbaram todos os alunos",
+    "tipo": "negação",
+    "natureza": "factual",
+    "emocao": "alegria"
+  }
+]
